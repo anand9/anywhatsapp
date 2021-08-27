@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, TextInput, Linking, Alert } from 'react-native';
-import {Button, Toast, Block} from 'galio-framework'
+import {Button, Block} from 'galio-framework'
+import Toast from 'react-native-toast-message'
+
 
 const Phone = () => {
 	const [phone, onChangePhone] = useState('');
@@ -8,17 +10,16 @@ const Phone = () => {
 	
 	const submitPhone =()=> {
 		let finalPhone = validatePhone(phone)
-		console.log("validity is", isValid);
-		if (isValid) {
-			let url = generateUrl(finalPhone)
-			Linking.openURL(url)
-		} else {
-			Alert.alert("Please enter valid phone number")
-		}
+		let url = generateUrl(finalPhone)
+		Linking.openURL(url)
+	}
+
+	const throwError=()=> {
+		Alert.alert("Please enter valid phone number")
 	}
 
 	const generateUrl=(num)=> {
-		let url = `https://api.whatsapp.com/send/?phone=${num}&text&app_absent=0`
+		let url = `https://wa.me/${num}`
 		return url
 	}
 
@@ -27,34 +28,29 @@ const Phone = () => {
 		if (formattedNum.charAt(0) == "+") {
 			formattedNum = num.substring(1)
 		}
+		formattedNum = formattedNum.replace(/\s/g,'')
 		if (isNumeric(formattedNum)) {
-			if (formattedNum.legth > 10 && formattedNum.legth < 13) {
+			if (formattedNum.length >= 10 && formattedNum.length < 13) {
 				formattedNum = formattedNum.slice(-10)
-				setValid(true)
-			} else if (formattedNum.length == 10) {
-				formattedNum = "91"+formattedNum
-				setValid(true)
+				formattedNum = "91"+formattedNum	
 			} else {
-				setValid(false)
+				throwError()
+				return;
 			}
 		} else {
-			// setValid(prevValue => {
-			// 	return (false);
-			// })
-			setValid(false)
-			console.log("2", isValid);
+			throwError()
+			return;
 		}
 		return formattedNum
 	}
 
-	const isNumeric =(num)=>{
-		console.log("num is", !isNaN(num));
-		return !isNaN(num)
+	const isNumeric =(numb)=>{
+		return !isNaN(numb)
 	}
 
 	return (
 		<View style={styles.content}>
-		{/* <Toast isShow={!isValid} positionIndicator="center" color="error">Please enter valid phone number</Toast> */}
+		{/* <Toast isShow={!isValid} type="error" text1="hello world" /> */}
 		<TextInput
 			style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
 			onChangeText={phone => onChangePhone(phone)}
