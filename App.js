@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Enter phone number</Text>
+        {/* <Text style={styles.title}>Enter phone number</Text> */}
       </View>
       <Phone />
     </View>
@@ -17,7 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#455A64',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, View, TextInput, Linking, Alert } from 'react-native';
-import {Button, Block} from 'galio-framework'
-import Toast from 'react-native-toast-message'
+import {Button} from 'galio-framework'
 
 
 const Phone = () => {
@@ -11,7 +10,7 @@ const Phone = () => {
 	const submitPhone =()=> {
 		let finalPhone = validatePhone(phone)
 		let url = generateUrl(finalPhone)
-		Linking.openURL(url)
+		// Linking.openURL(url)
 	}
 
 	const throwError=()=> {
@@ -57,15 +56,19 @@ const Phone = () => {
 			style={styles.input}
 			keyboardType="numeric"
 			placeholder="Enter phone number"
+			autoFocus={true}
 		/>
-		<View>
+		<View style={styles.btn}>
+
 		<Button
 			onPress={submitPhone}
-			color="primary"
+			color="#25D366"
 			round
+			size="large"
 		>
-			Open in Whatsap
+			Open in Whatsapp
 		</Button>
+
 		</View>
 	</View>
 	)
@@ -75,13 +78,20 @@ const styles =  StyleSheet.create({
 	content: {
 
 	},
+	btn: {
+		marginTop: 20,
+	},
 	input: {
 		color: '#000',
 		backgroundColor: "#fff",
-		fontSize: 24,
-		padding: 10,
+		fontSize: 28,
+		padding: 20,
 		textAlign: "center",
 		borderRadius: 10,
+	},
+	iconStyle: {
+		marginRight:50,
+		color: "#000"
 	}
 })
 
