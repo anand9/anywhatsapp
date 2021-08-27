@@ -10,7 +10,7 @@ const Phone = () => {
 	const submitPhone =()=> {
 		let finalPhone = validatePhone(phone)
 		let url = generateUrl(finalPhone)
-		// Linking.openURL(url)
+		Linking.openURL(url)
 	}
 
 	const throwError=()=> {
